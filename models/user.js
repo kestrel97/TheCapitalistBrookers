@@ -9,16 +9,22 @@ const UserSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   username: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,
     required: true
-  }
+  },
+  balance: {
+    type: Number,
+    default: 0
+  },
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -47,4 +53,11 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     if(err) throw err;
     callback(null, isMatch);
   });
+}
+
+module.exports.updateBalance = function(data, callback){
+  User.findOne({username: data.name}, (err, user) => {
+    user.balance = user.balance + data.amount;
+    user.save(callback); // add callback here
+  })
 }

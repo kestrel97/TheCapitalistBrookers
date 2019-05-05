@@ -11,9 +11,12 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { DepositComponent } from './components/deposit/deposit.component';
+import { WithdrawComponent } from './components/withdraw/withdraw.component';
 
 import {ValidationService} from './services/validation.service';
 import {AuthService} from './services/auth.service';
+import {DataService} from './services/data.service';
 import { FlashMessagesModule } from 'angular2-flash-messages/module';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -22,7 +25,9 @@ const appRoutes: Routes =  [
   {path:'register', component: RegisterComponent},
   {path:'login', component: LoginComponent},
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
-  {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]}
+  {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
+  {path:'deposit', component: DepositComponent, canActivate:[AuthGuard]},
+  {path:'withdraw', component: WithdrawComponent, canActivate:[AuthGuard]}
 ]
 
 @NgModule({
@@ -33,7 +38,9 @@ const appRoutes: Routes =  [
     RegisterComponent,
     HomeComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    DepositComponent,
+    WithdrawComponent,
   ],
   imports: [
     BrowserModule ,
@@ -42,7 +49,7 @@ const appRoutes: Routes =  [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule.forRoot()
   ],
-  providers: [ValidationService, AuthService, AuthGuard],
+  providers: [ValidationService, AuthService, AuthGuard, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,8 +1,26 @@
 
 <div *ngIf="user">
-  <h2 class="page-header"> {{ user.name }} </h2>
+  <!-- <h2 class="page-header"> {{ user.name }} </h2>
   <ul class="list-group">
       <li class="list-group-item">Username: {{ user.username }}</li>
       <li class="list-group-item"> Email: {{ user.email }}</li>
-  </ul>
+  </ul> -->
+
+<div class="jumbotron text-center">
+  <h1>Hi, {{ user.name }}</h1>
+  <p class = "lead"> Your Account Balance: Rs. {{ user.balance }} </p>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <h3><a [routerLink]="'/deposit'" >Deposit Money</a></h3>
+  </div>
+  <div class="col-md-4">
+    <h3><a [routerLink]="'/withdraw'">Withdraw Money</a></h3>
+  </div>
+  <div class="col-md-4">
+    <h3>JWT Tokens</h3>
+    <p>Full featured authentication using JSON web tokens. Login and store user data</p>
+  </div>
+</div>
 </div>

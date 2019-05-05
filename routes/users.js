@@ -59,6 +59,32 @@ router.post('/authenticate', (req, res, next) => {
   });
 });
 
+//update Balance
+router.post('/updateBalance',(req, res)=>{
+  // console.log(req.body);
+
+  let data = {
+      amount: req.body.amount,
+      name: req.body.name
+  };
+  // console.log(name);
+
+  // console.log("reached router");
+  User.updateBalance(data,(err)=>{
+    if (err) {
+        res.json({
+            success: false,
+            msg: err
+        })
+    } else {
+        res.json({
+            success: true,
+            msg: 'Account balance updated sucesssfully'
+        })
+    }
+  });
+});
+
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json({user: req.user});
