@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
+const Transaction = require('./transaction');
 
 // User Schema
 const UserSchema = mongoose.Schema({
@@ -56,10 +57,31 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 }
 
 module.exports.updateBalance = function(data, callback){
-  User.findOne({username: data.username}, (err, user) => {
+  User.findOne({_id: data.user_id}, (err, user) => {
     if (user) {
       user.balance = user.balance + data.amount;
-      user.save(callback); // add callback here
+      user.save((err) => {
+        if (err) {
+          callback(err);
+          return null;
+        }
+      });
+
+      const tr = {
+        is_personal: true,
+        user: user._id,
+        amount: data.amount
+      }
+
+      const trx = Transaction(tr);
+      trx.save((err) => {
+        if (err) {
+          callback(err);
+          return null;
+        }
+      });
+
+      callback(null);
     } else {
       callback("User not found.");
     }
@@ -67,28 +89,54 @@ module.exports.updateBalance = function(data, callback){
 }
 
 module.exports.transferMoney = function(data, callback) {
-  User.findOne({username: data.sender}, (err, sender) => {
+  if (data.amount < 1) {
+    callback("Amount must be positive");
+    return null;
+  }
+
+  User.findOne({_id: data.sender}, (err, sender) => {
     if (sender) {
       if (sender.balance < data.amount) {
         callback("Sender does not have sufficient balance.");
       } else {
         User.findOne({ username: data.recipient }, (err, recipient) => {
           if (recipient) {
-            recipient.balance = recipient.balance + data.amount;
-            sender.balance = sender.balance - data.amount;
+            if (sender._id.equals(recipient._id)) {
+              callback("Sending to your own account is not allowed.");
+              return null;
+            }
 
+            sender.balance = sender.balance - data.amount;
             sender.save((err) => {
               if (err) {
                 callback("Transfer failed.")
                 return null;
               }
             });
+
+            recipient.balance = recipient.balance + data.amount;
             recipient.save((err) => {
               if (err) {
                 callback("Transfer failed.");
                 return null;
               }
             });
+
+            const tr = {
+              is_personal: false,
+              sender: sender._id,
+              recipient: recipient._id,
+              amount: data.amount
+            }
+
+            const trx = Transaction(tr);
+            trx.save((err) => {
+              if (err) {
+                callback(err);
+                return null;
+              }
+            });
+
             callback(null);
           } else {
             callback("Recipient not found.")

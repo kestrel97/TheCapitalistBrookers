@@ -65,7 +65,7 @@ router.post('/updateBalance', passport.authenticate('jwt', {session:false}), (re
 
   let data = {
       amount: req.body.amount,
-      username: req.user.username
+      user_id: req.user._id
   };
   // console.log(name);
 
@@ -92,7 +92,7 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
 
 router.post('/transfer', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   let data = {
-    sender: req.user.username,
+    sender: req.user._id,
     amount: req.body.amount,
     recipient: req.body.recipient,
   }
