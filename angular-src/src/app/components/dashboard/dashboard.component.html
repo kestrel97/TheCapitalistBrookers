@@ -1,2 +1,21 @@
-<h2 class="page-header">Dashboard</h2>
-<p *ngIf="user">Welcome to your Dashboard, {{ user.name }}</p>
+
+<div *ngIf="user">
+
+<div class="jumbotron text-center">
+  <h1>Hi, {{ user.name }}</h1>
+  <p class = "lead"> Welcome to your Dashboard </p>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <h4><a [routerLink]="'/fundstransfer'" >Funds Transfer</a></h4>
+  </div>
+  <div class="col-md-4">
+    <h4><a [routerLink]="'/withdraw'">Withdraw Money</a></h4>
+  </div>
+  <div class="col-md-4">
+    <h4>JWT Tokens</h4>
+    <p>Full featured authentication using JSON web tokens. Login and store user data</p>
+  </div>
+</div>
+</div>
