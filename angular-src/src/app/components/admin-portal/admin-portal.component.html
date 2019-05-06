@@ -18,6 +18,7 @@
               <td>{{user.name}}</td>
               <td>
                 <a *ngIf="!user.is_verified" href="#" (click)="verifyUser(i)">Verify</a>
+                <p *ngIf="user.is_verified">Already verified</p>
               </td>
             </tr>
         </tbody>
