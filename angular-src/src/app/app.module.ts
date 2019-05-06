@@ -21,6 +21,7 @@ import {DataService} from './services/data.service';
 import { FlashMessagesModule } from 'angular2-flash-messages/module';
 import { AuthGuard, AdminAuthGuard } from './guards/auth.guard';
 import { AdminPortalComponent } from './components/admin-portal/admin-portal.component';
+import { HistoryComponent } from './components/history/history.component';
 
 const appRoutes: Routes =  [
   {path:'', component: HomeComponent},
@@ -31,7 +32,8 @@ const appRoutes: Routes =  [
   {path:'deposit', component: DepositComponent, canActivate:[AuthGuard]},
   {path:'withdraw', component: WithdrawComponent, canActivate:[AuthGuard]},
   {path:'admin', component: AdminPortalComponent, canActivate:[AdminAuthGuard]},
-  {path:'fundstransfer', component: FundstransferComponent, canActivate:[AuthGuard]}
+  {path:'fundstransfer', component: FundstransferComponent, canActivate:[AuthGuard]},
+  {path:'history', component: HistoryComponent, canActivate:[AuthGuard]}
 ]
 
 @NgModule({
@@ -47,6 +49,7 @@ const appRoutes: Routes =  [
     WithdrawComponent,
     AdminPortalComponent,
     FundstransferComponent,
+    HistoryComponent,
   ],
   imports: [
     BrowserModule ,

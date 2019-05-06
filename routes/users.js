@@ -92,6 +92,7 @@ router.post('/updateBalance', passport.authenticate('jwt', {session:false}), (re
 });
 
 
+
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json({user: req.user});
@@ -123,7 +124,7 @@ router.get('/getAll', passport.authenticate('jwt', {session:false}), (req, res, 
   if (!req.user.is_admin) {
     res.json({success: false, msg: 'Not allowed.'});
   }
-  
+
   var query = User.find().select('name email _id is_verified');
 
   query.exec(function (err, users) {
@@ -136,7 +137,7 @@ router.post('/verifyUser', passport.authenticate('jwt', {session:false}), (req, 
   if (!req.user.is_admin) {
     res.json({success: false, msg: 'Not allowed.'});
   }
-  
+
   User.findOne({ _id: req.body.id }, (err, user) => {
     if (user) {
       console.log(user);

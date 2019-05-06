@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class DataService {
   someAmount: any
   data: any
+  authToken: any
   constructor(private http: Http) { }
 
   updateBalance(amount){
@@ -27,6 +28,20 @@ export class DataService {
       return this.http.post('http://localhost:3000/users/updateBalance', this.data, {headers: headers})
         .pipe(map(res => res.json()))
     }
+    loadToken(){
+      const token = localStorage.getItem('id_token');
+      this.authToken = token;
+    }
+    getHistory(){
+      let headers = new Headers();
+      this.loadToken();
+
+      headers.append('Authorization',this.authToken);
+      headers.append('Content-Type','application/json');
+      return this.http.get('http://localhost:3000/users/history',{headers: headers})
+        .pipe(map(res => res.json()));
+    }
+
   fundstransfer(user){
     let headers = new Headers();
     let name= JSON.parse(localStorage.getItem('user'));
