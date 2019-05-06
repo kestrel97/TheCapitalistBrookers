@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   username: String;
   email: String;
   password: String;
+  usecase: String;
 
   constructor(private validationService: ValidationService,
               private flashMessage:FlashMessagesService,
@@ -29,7 +30,8 @@ export class RegisterComponent implements OnInit {
       name: this.name,
       email: this.email,
       username: this.username,
-      password: this.password
+      password: this.password,
+      usecase: this.usecase
     }
 
     // Required Fields
@@ -50,7 +52,11 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
       }
       else{
-        this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        if (data.msg) {
+          this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
+        } else {
+          this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        }
         this.router.navigate(['/register']);
       }
     });

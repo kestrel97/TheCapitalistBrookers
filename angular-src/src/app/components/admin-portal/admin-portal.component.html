@@ -7,6 +7,7 @@
           <tr>
             <th scope="col">Email</th>
             <th scope="col">Name</th>
+            <th scope="col">Use case</th>            
             <th *ngIf="users && users.length>0" scope="col">Status</th>
           </tr>
         </thead>
@@ -16,8 +17,10 @@
 
               <td>{{user.email}}</td>
               <td>{{user.name}}</td>
+              <td>{{user.usecase}}</td>
               <td>
                 <a *ngIf="!user.is_verified" href="#" (click)="verifyUser(i)">Verify</a>
+                <p *ngIf="user.is_verified">Already verified</p>
               </td>
             </tr>
         </tbody>
