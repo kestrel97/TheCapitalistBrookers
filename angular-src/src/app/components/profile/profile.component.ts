@@ -13,13 +13,8 @@ export class ProfileComponent implements OnInit {
   constructor(private authService:AuthService) { }
 
   ngOnInit() {
-    this.authService.isAdmin().subscribe( profile => {
-      console.log(profile);
-    })
-
     this.authService.getProfile().subscribe( profile => {
       this.user = profile.user;
-
     },
     err => {
       console.log(err);
