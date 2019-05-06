@@ -56,8 +56,13 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 }
 
 module.exports.updateBalance = function(data, callback){
-  User.findOne({username: data.name}, (err, user) => {
-    user.balance = user.balance + data.amount;
-    user.save(callback); // add callback here
+  User.findOne({username: data.username}, (err, user) => {
+    if (user) {
+      user.balance = user.balance + data.amount;
+      user.save(callback); // add callback here
+    } else {
+      callback("User not found.");
+    }
   })
 }
+

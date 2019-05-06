@@ -60,12 +60,12 @@ router.post('/authenticate', (req, res, next) => {
 });
 
 //update Balance
-router.post('/updateBalance',(req, res)=>{
+router.post('/updateBalance', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
   // console.log(req.body);
 
   let data = {
       amount: req.body.amount,
-      name: req.body.name
+      username: req.user.username
   };
   // console.log(name);
 
