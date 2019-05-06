@@ -13,6 +13,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { DepositComponent } from './components/deposit/deposit.component';
 import { WithdrawComponent } from './components/withdraw/withdraw.component';
+import { FundstransferComponent } from './components/fundstransfer/fundstransfer.component';
 
 import {ValidationService} from './services/validation.service';
 import {AuthService} from './services/auth.service';
@@ -27,7 +28,8 @@ const appRoutes: Routes =  [
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
   {path:'deposit', component: DepositComponent, canActivate:[AuthGuard]},
-  {path:'withdraw', component: WithdrawComponent, canActivate:[AuthGuard]}
+  {path:'withdraw', component: WithdrawComponent, canActivate:[AuthGuard]},
+  {path:'fundstransfer', component: FundstransferComponent, canActivate:[AuthGuard]}
 ]
 
 @NgModule({
@@ -41,6 +43,7 @@ const appRoutes: Routes =  [
     ProfileComponent,
     DepositComponent,
     WithdrawComponent,
+    FundstransferComponent,
   ],
   imports: [
     BrowserModule ,

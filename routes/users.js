@@ -85,18 +85,19 @@ router.post('/updateBalance', passport.authenticate('jwt', {session:false}), (re
   });
 });
 
+
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json({user: req.user});
 });
 
-router.post('/transfer', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+router.post('/fundstransfer', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   let data = {
     sender: req.user._id,
     amount: req.body.amount,
-    recipient: req.body.recipient,
+    recipient: req.body.username,
   }
-  
+
   User.transferMoney(data, (err) => {
     if (err) {
       res.json({

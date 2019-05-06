@@ -27,5 +27,15 @@ export class DataService {
       return this.http.post('http://localhost:3000/users/updateBalance', this.data, {headers: headers})
         .pipe(map(res => res.json()))
     }
+  fundstransfer(user){
+    let headers = new Headers();
+    let name= JSON.parse(localStorage.getItem('user'));
+    let token = localStorage.getItem('id_token');
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", token);
+    // console.log("kuch bhi")
+    return this.http.post('http://localhost:3000/users/fundstransfer', user, {headers: headers})
+      .pipe(map(res => res.json()))
+  }
 
 }
