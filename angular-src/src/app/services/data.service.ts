@@ -14,6 +14,7 @@ export class DataService {
       this.someAmount=amount;
       let headers = new Headers();
       let name= JSON.parse(localStorage.getItem('user'));
+      let token = localStorage.getItem('id_token');
       let username= name['username'];
       // console.log(username);
       this.data = {
@@ -21,6 +22,7 @@ export class DataService {
         name: username
       }
       headers.append("Content-Type", "application/json");
+      headers.append("Authorization", token);
       // console.log("kuch bhi")
       return this.http.post('http://localhost:3000/users/updateBalance', this.data, {headers: headers})
         .pipe(map(res => res.json()))
