@@ -90,4 +90,26 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
   res.json({user: req.user});
 });
 
+router.post('/transfer', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+  let data = {
+    sender: req.user.username,
+    amount: req.body.amount,
+    recipient: req.body.recipient,
+  }
+  
+  User.transferMoney(data, (err) => {
+    if (err) {
+      res.json({
+          success: false,
+          msg: err
+      })
+    } else {
+        res.json({
+            success: true,
+            msg: 'Amount transferred successfully.'
+        })
+    }
+  })
+});
+
 module.exports = router;

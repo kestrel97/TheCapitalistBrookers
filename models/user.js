@@ -66,3 +66,37 @@ module.exports.updateBalance = function(data, callback){
   })
 }
 
+module.exports.transferMoney = function(data, callback) {
+  User.findOne({username: data.sender}, (err, sender) => {
+    if (sender) {
+      if (sender.balance < data.amount) {
+        callback("Sender does not have sufficient balance.");
+      } else {
+        User.findOne({ username: data.recipient }, (err, recipient) => {
+          if (recipient) {
+            recipient.balance = recipient.balance + data.amount;
+            sender.balance = sender.balance - data.amount;
+
+            sender.save((err) => {
+              if (err) {
+                callback("Transfer failed.")
+                return null;
+              }
+            });
+            recipient.save((err) => {
+              if (err) {
+                callback("Transfer failed.");
+                return null;
+              }
+            });
+            callback(null);
+          } else {
+            callback("Recipient not found.")
+          }
+        })
+      }
+    } else {
+      callback("Sender not found.");
+    }
+  })
+}
