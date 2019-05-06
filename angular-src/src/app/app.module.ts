@@ -18,7 +18,8 @@ import {ValidationService} from './services/validation.service';
 import {AuthService} from './services/auth.service';
 import {DataService} from './services/data.service';
 import { FlashMessagesModule } from 'angular2-flash-messages/module';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard, AdminAuthGuard } from './guards/auth.guard';
+import { AdminPortalComponent } from './components/admin-portal/admin-portal.component';
 
 const appRoutes: Routes =  [
   {path:'', component: HomeComponent},
@@ -27,7 +28,8 @@ const appRoutes: Routes =  [
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
   {path:'deposit', component: DepositComponent, canActivate:[AuthGuard]},
-  {path:'withdraw', component: WithdrawComponent, canActivate:[AuthGuard]}
+  {path:'withdraw', component: WithdrawComponent, canActivate:[AuthGuard]},
+  {path:'admin', component: AdminPortalComponent, canActivate:[AdminAuthGuard]}
 ]
 
 @NgModule({
@@ -41,6 +43,7 @@ const appRoutes: Routes =  [
     ProfileComponent,
     DepositComponent,
     WithdrawComponent,
+    AdminPortalComponent,
   ],
   imports: [
     BrowserModule ,
@@ -49,7 +52,7 @@ const appRoutes: Routes =  [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule.forRoot()
   ],
-  providers: [ValidationService, AuthService, AuthGuard, DataService],
+  providers: [ValidationService, AuthService, AuthGuard, DataService, AdminAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

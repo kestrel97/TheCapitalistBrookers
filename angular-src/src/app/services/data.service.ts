@@ -28,4 +28,26 @@ export class DataService {
         .pipe(map(res => res.json()))
     }
 
+  getUnverifiedUsers() {
+    let headers = new Headers();
+    let token = localStorage.getItem('id_token');
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", token);
+    return this.http.get('http://localhost:3000/users/getAll', {headers: headers})
+        .pipe(map(res => res.json()));
+  }
+
+  verifyUser(_id) {
+    let headers = new Headers();
+    let token = localStorage.getItem('id_token');
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", token);
+
+    const data = {
+      "id" : _id
+    };
+
+    return this.http.post('http://localhost:3000/users/verifyUser', data, {headers: headers})
+        .pipe(map(res => res.json()));
+  }
 }

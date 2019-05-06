@@ -5,6 +5,16 @@ const Transaction = require('./transaction');
 
 // User Schema
 const UserSchema = mongoose.Schema({
+  is_admin: {
+    type: Boolean,
+    default: false,
+    required: true
+  },
+  is_verified: {
+    type: Boolean,
+    default: false,
+    required: true
+  },
   name: {
     type: String
   },

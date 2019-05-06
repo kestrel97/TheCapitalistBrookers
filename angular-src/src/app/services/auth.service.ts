@@ -16,12 +16,14 @@ export class AuthService {
     return this.http.post('http://localhost:3000/users/register', user,{headers: headers})
     .pipe(map(res => res.json()));
   }
+
   authenticateUser(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     return this.http.post('http://localhost:3000/users/authenticate', user,{headers: headers})
       .pipe(map(res => res.json()));
   }
+
   getProfile(){
     let headers = new Headers();
     this.loadToken();
@@ -31,7 +33,11 @@ export class AuthService {
     return this.http.get('http://localhost:3000/users/profile',{headers: headers})
       .pipe(map(res => res.json()));
   }
-  
+
+  isAdmin() {
+    let user =  JSON.parse(localStorage.getItem('user'));
+    return (user == null || user["is_admin"] == null) ? false : user["is_admin"];
+  }
 
   storeUserData(token, user){
     localStorage.setItem('id_token', token);
