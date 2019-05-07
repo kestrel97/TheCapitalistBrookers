@@ -133,7 +133,7 @@ router.get('/getAll', passport.authenticate('jwt', {session:false}), (req, res, 
   if (!req.user.is_admin) {
     res.json({success: false, msg: 'Not allowed.'});
   }
-  
+
   var query = User.find().select('name email _id is_verified usecase');
 
   query.exec(function (err, users) {
