@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
+import { AnonymousSubject } from 'rxjs/internal/Subject';
 
 @Component({
   selector: 'app-history',
@@ -9,12 +10,17 @@ import { DataService } from '../../services/data.service';
 })
 export class HistoryComponent implements OnInit {
 
-  constructor(private dataService:DataService) { }
+  trxHistory: any;
+  user_id: any;
+
+  constructor(private dataService:DataService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.dataService.getHistory().subscribe( profile => {
-      // this.user = profile.user;
+    this.user_id = this.authService.getUserId();
 
+    this.dataService.getHistory().subscribe(trxHistory => {
+      console.log(trxHistory);
+      this.trxHistory = trxHistory;
     },
     err => {
       console.log(err);

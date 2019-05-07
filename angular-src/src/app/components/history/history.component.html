@@ -1,3 +1,27 @@
-<p>
-  history works!
-</p>
+<h2 class="page-header">Transaction History</h2>
+<div class="container container-v-padded">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-responsive-sm table-striped">
+        <thead>
+          <tr>
+            <th scope="col">DateTime</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+            <!-- <tr *ngFor="let user of users; let i = index" [class.table-success]="user.is_verified == true"> -->
+            <tr *ngFor="let trx of trxHistory; let i = index">
+
+              <td>{{trx.date}}</td>
+              <td>{{trx.amount}}</td>
+              <!-- <td>
+                <a *ngIf="!user.is_verified" href="#" (click)="verifyUser(i)">Verify</a>
+                <p *ngIf="user.is_verified">Already verified</p>
+              </td> -->
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -34,6 +34,11 @@ export class AuthService {
       .pipe(map(res => res.json()));
   }
 
+  getUserId() {
+    let user =  JSON.parse(localStorage.getItem('user'));
+    return user["_id"];
+  }
+
   isAdmin() {
     let user =  JSON.parse(localStorage.getItem('user'));
     return (user == null || user["is_admin"] == null) ? false : user["is_admin"];

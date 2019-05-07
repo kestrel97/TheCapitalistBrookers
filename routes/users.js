@@ -4,6 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+const Transaction = require('../models/transaction');
 
 // Register
 router.post('/register', (req, res, next) => {
@@ -132,13 +133,8 @@ router.get('/getAll', passport.authenticate('jwt', {session:false}), (req, res, 
   if (!req.user.is_admin) {
     res.json({success: false, msg: 'Not allowed.'});
   }
-<<<<<<< HEAD
-
-  var query = User.find().select('name email _id is_verified');
-=======
   
   var query = User.find().select('name email _id is_verified usecase');
->>>>>>> 305d903fe3eb706100b3923fe36d97ece697ebdb
 
   query.exec(function (err, users) {
     if (err) res.json({success: false, msg: err})
@@ -167,6 +163,20 @@ router.post('/verifyUser', passport.authenticate('jwt', {session:false}), (req, 
       success: false,
       msg: 'User could not be verified.'
     })
+  });
+});
+
+router.get('/getTrx', passport.authenticate('jwt', { session:false }), (req, res, next) => {
+
+  Transaction.find({ $or: [ { user: req.user._id }, { sender: req.user._id }, { recipient: req.user._id } ] }, ( err, trxs ) => {
+    if (err) {
+      res.json({
+        success: true,
+        msg: 'Some error occured.'
+     });
+    } else {
+      return res.json(trxs);
+    }
   });
 });
 
